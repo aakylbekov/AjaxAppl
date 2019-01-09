@@ -1,0 +1,46 @@
+﻿@model string
+
+@{ 
+        AjaxOptions ajaxOption = new AjaxOptions()
+        {
+            UpdateTargetId = "tableData",
+            InsertionMode = InsertionMode.InsertAfter,
+            OnBegin = "OnBegin",
+            LoadingElementId = "loading"
+
+    };
+}
+
+<div id="loading" style="display: none">
+    <img src="~/Content/Loading_icon.gif" />
+</div>
+
+<h4> Appointment List</h4>
+@using (Ajax.BeginForm("AppointmentData", ajaxOption))
+{
+    <table>
+        <thead> 
+            <tr>
+                <td>Client Name</td>
+                <td>Appointment Dates</td>
+            </tr>
+        </thead>
+        <tbody id="tableData">
+            @Html.Action("AppointmentData", new { id = Model })
+        </tbody>
+    </table>
+
+    <input type="text" name="UserName"/>
+    <br />
+    <input type="submit" value="Send"/>
+}
+
+
+@section scripts
+    {
+    <script>
+        function OnBegin() {
+            alert("OnBegin");
+        }
+    </script>
+    }

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<string>
+
+@{
+    ViewBag.Title = "IndexComment";
+}
+<h2>
+    Cokmmmmemfem
+</h2>
+<ul id="comments">
+    @foreach (var comment in Model)
+    {
+        <li>@comment</li>
+    }
+</ul>
+
+<hr/>
+<div class="well">
+    <form method="post" id="commentForm" action="@Url.Action("AddComment")">
+        @Html.TextArea("Comment", new {rows =4, cols= 50 })
+        <br />
+        <input type="submit" value="Add Comment" />
+        </form>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#commentForm").submit(function (event) {
+                event.preventDefault();
+                var data = $(this).serialize();
+                var url = $(this).attr("action");
+                $.post(url, data, function (responce) {
+                    $("#comments").append(responce);
+                });
+            });
+        });
+    </script>
+    }
